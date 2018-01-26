@@ -1,0 +1,38 @@
+<!DOCTYPE html >
+<html layout:decorate="~{includes/layout}"
+      xmlns:layout=”http://www.ultraq.net.nz/thymeleaf/layout”>
+<head>
+    <title>Spring dashboard</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <h1>Add menus</h1>
+
+    <form action="/menus/add" method="post">
+        <div class="form-group">
+            <label for="menuName">Menu name</label>
+            <input type="text" class="form-control" id="menuName" name="name"
+                   aria-describedby="menuHelp" placeholder="Enter menu name">
+            <small id="menuHelp" class="form-text text-muted">The show name of current menu.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="url">Menu Url</label>
+            <input type="text" class="form-control" id="url" name="url"
+                   placeholder="Menu url path">
+        </div>
+        <div class="form-group">
+            <label for="menuIcon">Icon text</label>
+            <input type="text" class="form-control" id="menuIcon"
+                   placeholder="Icon name of given feather icon." name="icon"
+                   aria-describedby="menuIconHelp">
+            <small id="menuIconHelp"
+                   class="form-text text-muted">Icon name of feather icons, see
+                <a href="https://feathericons.com/" target="_blank">https://feathericons.com/</a>
+            </small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</main>
+</body>
+</html>
