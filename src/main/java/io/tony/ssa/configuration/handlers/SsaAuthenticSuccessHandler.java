@@ -52,7 +52,7 @@ public class SsaAuthenticSuccessHandler extends SavedRequestAwareAuthenticationS
       accessMenus = Collections.emptyList();
     }
 
-    request.getSession().setAttribute("USER_MENUS", accessMenus);
+    request.getSession().setAttribute("userMenus", accessMenus);
     super.onAuthenticationSuccess(request, response, authentication);
   }
 
