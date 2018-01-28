@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import io.tony.ssa.persistent.dao.MenuRepository;
 import io.tony.ssa.persistent.dao.RoleRepository;
@@ -36,10 +37,11 @@ public class SsaAuthenticSuccessHandler extends SavedRequestAwareAuthenticationS
 
 
   @Override
+  @Transactional
   public void onAuthenticationSuccess(HttpServletRequest request,
                                       HttpServletResponse response,
                                       Authentication authentication) throws IOException, ServletException {
-    List<Menu> accessMenus = null;
+    List<Menu> accessMenus ;
     if (isSuperAdmin(authentication.getAuthorities())) {
       accessMenus = menuRepository.findAll();
     } else {

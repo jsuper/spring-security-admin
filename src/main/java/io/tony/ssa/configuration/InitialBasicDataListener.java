@@ -1,5 +1,7 @@
 package io.tony.ssa.configuration;
 
+import io.tony.ssa.persistent.dao.MenuRepository;
+import io.tony.ssa.persistent.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -34,6 +36,9 @@ public class InitialBasicDataListener implements ApplicationListener<ContextRefr
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
 
+  @Autowired
+  private MenuRepository menuRepository ;
+
 
   private static boolean run;
 
@@ -50,8 +55,13 @@ public class InitialBasicDataListener implements ApplicationListener<ContextRefr
     Role userRole = createRoleIfNotFound("ROLE_USER", Collections.singletonList(read));
     Role adminRole = createRoleIfNotFound("ROLE_ADMIN", Arrays.asList(read, write));
 
-    User admin = createUserIfNotFound("admin", passwordEncoder.encode("admin"), Arrays.asList(userRole, adminRole));
-    User user = createUserIfNotFound("user", passwordEncoder.encode("user"), Collections.singletonList(userRole));
+    createUserIfNotFound("admin", passwordEncoder.encode("admin"), Arrays.asList(userRole, adminRole));
+    createUserIfNotFound("user", passwordEncoder.encode("user"), Collections.singletonList(userRole));
+
+    createMenuIfNotFound("Dashboard","/home","home") ;
+    createMenuIfNotFound("Users","/users","users") ;
+    createMenuIfNotFound("Menus","/menus","menu") ;
+
   }
 
   private Privilege createPrivilegeIfNotFound(String name) {
@@ -86,5 +96,17 @@ public class InitialBasicDataListener implements ApplicationListener<ContextRefr
     }
 
     return user;
+  }
+
+  private Menu createMenuIfNotFound(String name, String url, String icon) {
+    Menu menu = menuRepository.findByUrl(url) ;
+    if(menu==null) {
+        menu = new Menu() ;
+        menu.setName(name);
+        menu.setUrl(url);
+        menu.setIcon(icon);
+        menu = menuRepository.save(menu) ;
+    }
+    return menu ;
   }
 }

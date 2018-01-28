@@ -8,4 +8,8 @@ import io.tony.ssa.persistent.model.Menu;
 
 public interface MenuRepository extends CrudRepository<Menu, Integer> {
   List<Menu> findAll();
+
+  Menu findByName(String name);
+
+  Menu findByUrl(String url);
 }

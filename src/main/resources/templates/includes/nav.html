@@ -6,8 +6,9 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item" th:each="menu : ${session.userMenus}">
-                <a class="nav-link" th:href="${menu.url}" th:text="${menu.name}">
-                    <span th:data-feather="${menu.icon}"></span>
+                <a class="nav-link" th:href="${menu.url}">
+                    <span data-th-attr="data-feather=${menu.icon}"></span>
+                    <th:block th:text="${menu.name}"/>
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
